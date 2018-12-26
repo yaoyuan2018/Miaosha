@@ -41,10 +41,11 @@
 				data:{
 					"telphone":$("#telphone").val(),
 				},
+				xhrFields:{withCredentials:true},
 				success:function(data){
 					if(data.status == "success"){
 						alert("opt已经发送到手机上，请注意查收");
-						window.location.href="file:///E:/JAVA%E7%BB%83%E4%B9%A0%E9%A1%B9%E7%9B%AE%E9%9B%86%E5%90%88/html/register.html";
+						window.location.href="file:///E:/JAVA%E8%AE%AD%E7%BB%83%E9%A1%B9%E7%9B%AE%E9%9B%86%E5%90%88/Miaoshax270/html/register.html";
 					}else{
 						alert("opt发送失败，原因为"+data.data.errMsg);
 					}

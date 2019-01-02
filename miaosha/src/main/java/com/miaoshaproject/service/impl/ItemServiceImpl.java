@@ -12,6 +12,7 @@ import com.miaoshaproject.validator.ValidationResult;
 import com.miaoshaproject.validator.ValidatorImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
@@ -22,6 +23,7 @@ import java.util.List;
  * @Date: 2019/1/2 15:30
  * @mail: yy494818027@163.com
  */
+@Service
 public class ItemServiceImpl implements ItemService {
     @Autowired
     private ValidatorImpl validator;

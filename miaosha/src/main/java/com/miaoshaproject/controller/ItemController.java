@@ -8,9 +8,7 @@ import com.miaoshaproject.service.model.ItemModel;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 
@@ -19,14 +17,16 @@ import java.math.BigDecimal;
  * @Date: 2019/1/2 16:15
  * @mail: yy494818027@163.com
  */
-@Controller("/item")
+@Controller("item")
 @RequestMapping("/item")
 @CrossOrigin(allowCredentials = "true", origins = {"*"})
 public class ItemController extends BaseController {
 
     @Autowired
-    private ItemService itemService;
+    ItemService itemService;
 
+    @RequestMapping(value = "/create",method = {RequestMethod.POST},consumes = {CONTENT_TYPE_FORMED})
+    @ResponseBody
     public CommonReturnType createItem(@RequestParam(name = "title")String title,
                                        @RequestParam(name = "description")String description,
                                        @RequestParam(name = "price") BigDecimal price,

@@ -25,7 +25,7 @@ public class ItemController extends BaseController {
     @Autowired
     ItemService itemService;
 
-    @RequestMapping(value = "/create",method = {RequestMethod.GET})
+    @RequestMapping(value = "/create",method = {RequestMethod.POST},consumes = {CONTENT_TYPE_FORMED})
     @ResponseBody
     public CommonReturnType createItem(@RequestParam(name = "title")String title,
                                        @RequestParam(name = "description")String description,
@@ -47,7 +47,7 @@ public class ItemController extends BaseController {
     }
 
     //商品详情页浏览
-    @RequestMapping(value = "/get",method = {RequestMethod.POST},consumes = {CONTENT_TYPE_FORMED})
+    @RequestMapping(value = "/get",method = {RequestMethod.GET})
     @ResponseBody
     public CommonReturnType getItem(@RequestParam(name = "id")Integer id){
         ItemModel itemModel = itemService.getItemById(id);

@@ -1,5 +1,6 @@
 package com.miaoshaproject.service.impl;
 
+import com.alibaba.druid.sql.ast.expr.SQLCaseExpr;
 import com.miaoshaproject.dao.ItemDOMapper;
 import com.miaoshaproject.dao.ItemStockDOMapper;
 import com.miaoshaproject.dataobject.ItemDO;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @Author: Y_uan
@@ -79,7 +81,13 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<ItemModel> listItem() {
-        return null;
+        List<ItemDO> itemDOList = itemDOMapper.listItem();
+        List<ItemModel>itemModelList = itemDOList.stream().map(itemDO -> {
+            ItemStockDO itemStockDO = itemStockDOMapper.selectByItemId(itemDO.getId());
+            ItemModel itemModel = this.convertModelFromDataObject(itemDO,itemStockDO);
+            return itemModel;
+        }).collect(Collectors.toList());
+        return itemModelList;
     }
 
     @Override

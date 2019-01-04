@@ -10,7 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Max;
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @Author: Y_uan
@@ -55,6 +58,20 @@ public class ItemController extends BaseController {
         ItemVO itemVO = convertVOFromModel(itemModel);
 
         return CommonReturnType.create(itemVO);
+    }
+
+    //商品列表页面浏览
+    @RequestMapping(value = "/list",method = {RequestMethod.GET})
+    @ResponseBody
+    public CommonReturnType listItem(){
+        List<ItemModel> itemModelList = itemService.listItem();
+
+        //使用stream api将List内的itemModel转化为itemVO
+        List<ItemVO> itemVOList = itemModelList.stream().map(itemModel -> {
+            ItemVO itemVO = this.convertVOFromModel(itemModel);
+            return itemVO;
+        }).collect(Collectors.toList());
+        return CommonReturnType.create(itemVOList);
     }
 
     private ItemVO convertVOFromModel(ItemModel itemModel){

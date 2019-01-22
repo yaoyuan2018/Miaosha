@@ -15,6 +15,7 @@ import com.miaoshaproject.service.model.UserModel;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
@@ -75,13 +76,16 @@ public class OrderServiceImpl implements OrderService {
         orderModel.setOrderPrice(itemModel.getPrice().multiply(new BigDecimal(amount)));
 
         //生成交易流水号，订单号
+        orderModel.setId(generateOrderNo());
         OrderDO orderDO = convertFromOrderModel(orderModel);
         orderDOMapper.insertSelective(orderDO);
-        //4.返回前端
 
-        return null;
+        //4.返回前端
+        return orderModel;
     }
 
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     private String generateOrderNo(){
         //订单号有16位
         StringBuilder stringBuilder = new StringBuilder();
@@ -101,7 +105,7 @@ public class OrderServiceImpl implements OrderService {
         for (int i = 0; i < 6-sequenceStr.length(); i++){
             stringBuilder.append(0);
         }
-        stringBuilder.append(sequenceStr)
+        stringBuilder.append(sequenceStr);
         //最后2位为分库分表位
         stringBuilder.append("00");
 

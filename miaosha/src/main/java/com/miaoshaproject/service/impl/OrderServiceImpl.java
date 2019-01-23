@@ -102,15 +102,18 @@ public class OrderServiceImpl implements OrderService {
         sequenceDO.setCurrentValue(sequenceDO.getCurrentValue() + sequenceDO.getStep());
         sequenceDOMapper.updateByPrimaryKeySelective(sequenceDO);
         String sequenceStr = String.valueOf(sequence);
+        
         for (int i = 0; i < 6-sequenceStr.length(); i++){
             stringBuilder.append(0);
         }
         stringBuilder.append(sequenceStr);
+
         //最后2位为分库分表位
         stringBuilder.append("00");
 
         return stringBuilder.toString();
     }
+
     private OrderDO convertFromOrderModel(OrderModel orderModel){
         if (orderModel == null){
             return null;

@@ -30,6 +30,9 @@ public class PromoServiceImpl implements PromoService {
 
         //dataobject -> model
         PromoModel promoModel = convertFromDataObject(promoDO);
+        if (promoModel == null){
+            return null;
+        }
 
         //判断当前时间是否秒杀活动即将开始或正在进行
         DateTime now = new DateTime();

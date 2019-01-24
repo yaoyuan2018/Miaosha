@@ -12,7 +12,7 @@
 	<div class="content">
 		<h3 class="form-title">商品详情</h3>
 		<div id="promoStartDateContainer" class="form-group">
-			<label style="color: red"  class="control-label">秒杀开始时间</label>
+			<label style="color: blue" id="promoStatus" class="control-label"></label>
 			<div>
 				<label style="color: red" class="control-label" id="promoStartDate"/>
 			</div>
@@ -118,6 +118,7 @@ var g_itemVO = {};
 					if(data.status == "success"){
 						g_itemVO = data.data;
 						reloadDom();
+						setInterval(reloadDom,1000);
 					}else{
 						alert("获取信息失败，原因为"+data.data.errMsg);
 					}
@@ -127,6 +128,7 @@ var g_itemVO = {};
 				}
 			});
 		});
+
 	function reloadDom(){
 		$("#title").text(g_itemVO.title);
 		$("#description").text(g_itemVO.description);
@@ -136,12 +138,21 @@ var g_itemVO = {};
 		$("#sales").text(g_itemVO.sales);
 		if (g_itemVO.promoStatus == 1) {
 			//秒杀活动还未开始
-			$("#promoStartDate").text("秒杀活动将于： "+g_itemVO.startDate+"开始");
+			var startTime = g_itemVO.startDate.replace(new RegExp("-","gm"),"/");
+			startTime = (new Date(startTime)).getTime();
+			var nowTime = Date.parse(new Date());
+			var delta = (startTime - nowTime)/1000;
+
+			$("#promoStartDate").text("秒杀活动将于： "+g_itemVO.startDate+" 开始 倒计时: "+delta+" 秒");
 			$("#promoPrice").text(g_itemVO.promoPrice);
+
+			$("#createorder").attr("disabled",true);
 		}else if (g_itemVO.promoStatus == 2) {
 			//秒杀活动正在进行中
 			$("#promoStartDate").text("秒杀正在进行中");
 			$("#promoPrice").text(g_itemVO.promoPrice);
+
+			$("#createorder").attr("disabled",false);
 		}
 	}
 </script>

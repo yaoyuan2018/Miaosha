@@ -31,9 +31,6 @@
         </javaClientGenerator>
         <!--生成对应表及类名-->
 
-        <table tableName="user_info" domainObjectName="UserDO" enableCountByExample="false"
-        enableUpdateByExample="false" enableDeleteByExample="false"
-        enableSelectByExample="false" selectByExampleQueryId="false"></table>
         <!--
         <table tableName="user_password" domainObjectName="UserPasswordDO" enableCountByExample="false"
                enableUpdateByExample="false" enableDeleteByExample="false"
@@ -47,7 +44,11 @@
                enableSelectByExample="false" selectByExampleQueryId="false"></table>
                -->
 
-        <table tableName="sequence_info" domainObjectName="SequenceDO" enableCountByExample="false"
+        <!--<table tableName="sequence_info" domainObjectName="SequenceDO" enableCountByExample="false"
+               enableUpdateByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+
+        <table tableName="promo" domainObjectName="PromoDO" enableCountByExample="false"
                enableUpdateByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" selectByExampleQueryId="false"></table>
     </context>
